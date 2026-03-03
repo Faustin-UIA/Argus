@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UIA Inference Certification</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header>
+        <h1>UIA Inference Certification <span>Workbench</span></h1>
+        <p>
+          End-to-end flow: compute manifold, classify AX triggers, build anti-hallucination envelope,
+          verify correction, and optionally call model API in one click.
+        </p>
+      </header>
+
+      <section class="card" aria-labelledby="diag-title">
+        <div class="card-heading">
+          <h2 id="diag-title">Connection diagnostics</h2>
+          <button id="checkConnBtn" type="button">Check backend</button>
+        </div>
+        <p class="hint">Use this first if Autopilot fails. It verifies that this page is served by the Node backend.</p>
+        <p id="connStatus" class="status-line">Checking connection...</p>
+      </section>
+
+      <section class="card" aria-labelledby="autopilot-title">
+        <h2 id="autopilot-title">Autopilot mode (one prompt → full pipeline)</h2>
+        <label class="stack" for="autopilotPrompt">
+          Prompt
+          <textarea id="autopilotPrompt" rows="4" placeholder="Enter prompt here..."></textarea>
+        </label>
+        <div class="actions">
+          <button id="autopilotBtn" type="button">Run full pipeline</button>
+        </div>
+        <pre id="autopilotOutput" class="code"></pre>
+      </section>
+
+      <section class="card" aria-labelledby="manifold-title">
+        <div class="card-heading">
+          <h2 id="manifold-title">1) Agent manifold by testing</h2>
+          <button id="runManifoldBtn" type="button">Run manifold test</button>
+        </div>
+        <p class="hint">
+          Uses an embedded AX benchmark mini-set and simulates baseline vs UIA run metrics.
+        </p>
+        <div id="manifoldSummary" class="summary-grid"></div>
+        <table id="manifoldTable" class="table" aria-live="polite"></table>
+      </section>
+
+      <section class="card" aria-labelledby="classify-title">
+        <h2 id="classify-title">2) Prompt → AX trigger analysis</h2>
+        <label class="stack" for="promptInput">
+          User prompt
+          <textarea
+            id="promptInput"
+            rows="4"
+            placeholder="Paste a prompt to detect likely AX families..."
+          ></textarea>
+        </label>
+        <div class="actions">
+          <button id="classifyBtn" type="button">Analyze AX trigger</button>
+        </div>
+        <div id="classificationResult" aria-live="polite"></div>
+      </section>
+
+      <section class="card" aria-labelledby="pre-envelope-title">
+        <h2 id="pre-envelope-title">3) Inference Envelope (Pre-generation)</h2>
+        <p class="hint">
+          This is the envelope data applied before generation.
+        </p>
+        <pre id="envelopeOutput" class="code"></pre>
+      </section>
+
+      <section class="card" aria-labelledby="post-verify-title">
+        <h2 id="post-verify-title">4) Envelope Verification (Post-generation)</h2>
+        <p class="hint">Post-generation validation data + pass/fail check against the pre-generation envelope.</p>
+        <label class="stack" for="observedInput">
+          Observed metrics JSON (post-generation)
+          <textarea id="observedInput" rows="8" spellcheck="false"></textarea>
+        </label>
+        <div class="actions">
+          <button id="verifyBtn" type="button">Verify correction</button>
+        </div>
+        <pre id="postValidationOutput" class="code"></pre>
+        <div id="verificationResult" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
